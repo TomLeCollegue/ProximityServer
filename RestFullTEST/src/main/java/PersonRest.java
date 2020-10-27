@@ -9,7 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 @Path("/person")
-public class HelloWorld {
+public class PersonRest {
 
 
     @GET
