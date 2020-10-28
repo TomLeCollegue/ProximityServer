@@ -109,7 +109,7 @@ public class Accounts {
 
         // our SQL SELECT query.
         // if you only need a few columns, specify them by name instead of using "*"
-        String query = "SELECT * FROM users";
+        String query = "SELECT * FROM users WHERE email = '" + email + "' AND  password = '" + password + "'";
 
         // create the java statement
         Statement st = conn.createStatement();

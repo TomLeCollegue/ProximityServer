@@ -31,13 +31,13 @@ public class AccountRest {
     @POST
     @Path("/signIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("text/plain")
-    public int SignIN(InfoAccount info) throws SQLException, ClassNotFoundException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String SignIN(InfoAccount info) throws SQLException, ClassNotFoundException {
 
 
         int idint = Accounts.SignIn(info.getMail(), info.getPassword());
-
-        return idint;
+        String id = "{\"id\":\""+ idint + "\" }";
+        return id;
     }
 
 }
