@@ -18,7 +18,7 @@ public class AccountRest {
     @Path("/signUP")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("text/plain")
-    public String SignUP(Person person){
+    public String SignUP(Person person) throws SQLException, ClassNotFoundException {
 
         if(Accounts.CreateUser(person.getEmail(), "1234")){
             return person.getEmail();
@@ -35,8 +35,8 @@ public class AccountRest {
     public String SignIN(InfoAccount info) throws SQLException, ClassNotFoundException {
 
 
-        int idint = Accounts.SignIn(info.getMail(), info.getPassword());
-        String id = "{\"id\":\""+ idint + "\" }";
+        String uuid = Accounts.SignIn(info.getMail(), info.getPassword());
+        String id = "{\"id\":\""+ uuid + "\" }";
         return id;
     }
 

@@ -1,5 +1,6 @@
 package serveurNeo4j.accounts;
 import java.sql.*;
+import java.util.UUID;
 
 public class Accounts {
 
@@ -8,49 +9,6 @@ public class Accounts {
     public static String URL = "jdbc:mariadb://127.0.0.1:3306/proximity";
     public static String USER = "root";
     public static String PASSWORD = "1234";
-
-    public static boolean CreateUser(String email, String password) {
-
-        Connection connexion = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connexion = DriverManager.getConnection(URL, USER, PASSWORD);
-
-            /* Création de l'objet gérant les requêtes */
-            Statement statement = connexion.createStatement();
-
-            int statut = statement.executeUpdate("INSERT INTO users (email, password) " +
-                    "SELECT '" + email + "','" + password + "' FROM dual " +
-                    "WHERE NOT EXISTS (SELECT * FROM users WHERE email = '" + email + "');");
-
-            if (statut == 0) {
-                System.out.println("LOG : tentative de creation de compte avec un email deja existant");
-                return false;
-            } else {
-                System.out.println("LOG : compte crée avec l'email :" + email);
-                return true;
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("error sql");
-            e.printStackTrace();
-        } finally {
-            if (connexion != null){
-                try {
-                    /* Fermeture de la connexion */
-                    connexion.close();
-                } catch (SQLException ignore) {
-                    /* Si une erreur survient lors de la fermeture, il suffit de l'ignorer. */
-                    System.out.println("error closing connection");
-                }
-        }
-    }
-
-        return false;
-    }
-
-
 
     public static void DeleteUser(String email, String password){
 
@@ -99,8 +57,8 @@ public class Accounts {
         }
     }
 
-    public static int SignIn(String email, String password) throws ClassNotFoundException, SQLException {
-        int id = 0;
+    public static String SignIn(String email, String password) throws ClassNotFoundException, SQLException {
+        String id = "0";
 
         Class.forName("org.mariadb.jdbc.Driver");
 
@@ -120,7 +78,7 @@ public class Accounts {
         // iterate through the java resultset
         while (rs.next())
         {
-            id = rs.getInt("id");
+            id = rs.getString("uuid");
 
 
             // print the results
@@ -130,5 +88,38 @@ public class Accounts {
         return id;
     }
 
+    public static boolean CreateUser(String email, String password) throws ClassNotFoundException, SQLException {
+        Class.forName("org.mariadb.jdbc.Driver");
+
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+
+        // create our mysql database connection
+        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
+        // our SQL SELECT query.
+        // if you only need a few columns, specify them by name instead of using "*"
+        String query = "INSERT INTO users (email, password, uuid) " +
+        "SELECT '" + email + "','" + password + "','" + randomUUIDString + "' FROM dual " +
+                "WHERE NOT EXISTS (SELECT * FROM users WHERE email = '" + email + "')";
+
+        // create the java statement
+        Statement st = conn.createStatement();
+
+        // execute the query, and get a java resultset
+        int statut = st.executeUpdate(query);
+
+        // iterate through the java resultset
+        if (statut == 0) {
+            System.out.println("LOG : tentative de creation de compte avec un email deja existant");
+            return false;
+        } else {
+            System.out.println("LOG : compte crée avec l'email :" + email);
+            return true;
+        }
+
     }
+
+
+}
 
