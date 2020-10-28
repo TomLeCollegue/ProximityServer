@@ -1,5 +1,4 @@
 package serveurNeo4j.accounts;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,50 +12,54 @@ public class Accounts {
     public static String USER = "root";
     public static String PASSWORD = "1234";
 
-    public static void CreateUser(String email, String password){
+    public static boolean CreateUser(String email, String password) {
 
         Connection connexion = null;
         try {
-            connexion = DriverManager.getConnection( URL, USER, PASSWORD );
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = DriverManager.getConnection(URL, USER, PASSWORD);
 
             /* Création de l'objet gérant les requêtes */
             Statement statement = connexion.createStatement();
 
-            int statut = statement.executeUpdate( "INSERT INTO users (email, password) "+
-                    "SELECT '"+ email + "','" + password + "' FROM dual " +
-                    "WHERE NOT EXISTS (SELECT * FROM users WHERE email = '"+ email + "');");
+            int statut = statement.executeUpdate("INSERT INTO users (email, password) " +
+                    "SELECT '" + email + "','" + password + "' FROM dual " +
+                    "WHERE NOT EXISTS (SELECT * FROM users WHERE email = '" + email + "');");
 
-            if(statut == 0) {
+            if (statut == 0) {
                 System.out.println("LOG : tentative de creation de compte avec un email deja existant");
-
-                //TODO retour client fail
-            }
-            else {
+                return false;
+            } else {
                 System.out.println("LOG : compte crée avec l'email :" + email);
-                //TODO retour client succeed
+                return true;
             }
 
 
-
-        } catch ( SQLException e ) {
+        } catch (Exception e) {
             System.out.println("error sql");
+            e.printStackTrace();
         } finally {
-            if ( connexion != null )
+            if (connexion != null){
                 try {
                     /* Fermeture de la connexion */
                     connexion.close();
-                } catch ( SQLException ignore ) {
+                } catch (SQLException ignore) {
                     /* Si une erreur survient lors de la fermeture, il suffit de l'ignorer. */
                     System.out.println("error closing connection");
                 }
         }
     }
 
+        return false;
+    }
+
+
 
     public static void DeleteUser(String email, String password){
 
         Connection connexion = null;
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             connexion = DriverManager.getConnection( URL, USER, PASSWORD );
 
             /* Création de l'objet gérant les requêtes */
@@ -81,7 +84,13 @@ public class Accounts {
 
         } catch ( SQLException e ) {
             System.out.println("error sql");
-        } finally {
+            e.printStackTrace();
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+
+        finally {
             if ( connexion != null )
                 try {
                     /* Fermeture de la connexion */

@@ -15,11 +15,14 @@ public class AccountRest {
     @POST
     @Path("/signUP")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("text/plain")
     public String SignUP(Person person){
 
-        Accounts.CreateUser(person.getEmail(), "1234");
-
-        return person.getEmail();
+        if(Accounts.CreateUser(person.getEmail(), "1234")){
+            return person.getEmail();
+        }
+        else{
+            return "mail error";
+        }
     }
 }

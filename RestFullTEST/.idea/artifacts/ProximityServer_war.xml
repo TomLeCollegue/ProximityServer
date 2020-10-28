@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="RestFullTEST:war">
+  <artifact type="war" name="ProximityServer:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <properties id="maven-jee-properties">
       <options>
-        <module>RestFullTEST</module>
+        <module>ProximityServer</module>
         <packaging>war</packaging>
       </options>
     </properties>
     <root id="archive" name="RestFullTEST-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="RestFullTEST:war exploded" />
+      <element id="artifact" artifact-name="ProximityServer:war exploded" />
     </root>
   </artifact>
 </component>
