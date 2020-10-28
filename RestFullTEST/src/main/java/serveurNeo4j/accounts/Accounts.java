@@ -1,8 +1,5 @@
 package serveurNeo4j.accounts;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Accounts {
 
@@ -101,4 +98,37 @@ public class Accounts {
                 }
         }
     }
-}
+
+    public static int SignIn(String email, String password) throws ClassNotFoundException, SQLException {
+        int id = 0;
+
+        Class.forName("org.mariadb.jdbc.Driver");
+
+        // create our mysql database connection
+        Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
+        // our SQL SELECT query.
+        // if you only need a few columns, specify them by name instead of using "*"
+        String query = "SELECT * FROM users";
+
+        // create the java statement
+        Statement st = conn.createStatement();
+
+        // execute the query, and get a java resultset
+        ResultSet rs = st.executeQuery(query);
+
+        // iterate through the java resultset
+        while (rs.next())
+        {
+            id = rs.getInt("id");
+
+
+            // print the results
+
+        }
+        st.close();
+        return id;
+    }
+
+    }
+
