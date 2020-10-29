@@ -3,7 +3,9 @@ package serveurNeo4j;
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
+import serveurNeo4j.Person.GetPerson;
 import serveurNeo4j.Person.InfoAccount;
+import serveurNeo4j.Person.InfoConnectionLogedIn;
 import serveurNeo4j.Person.Person;
 import serveurNeo4j.accounts.Accounts;
 
@@ -44,12 +46,13 @@ public class AccountRest {
     @Path("/signIn")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String SignIN(InfoAccount info) throws SQLException, ClassNotFoundException {
+    public InfoConnectionLogedIn SignIN(InfoAccount info) throws SQLException, ClassNotFoundException {
 
 
         String uuid = Accounts.SignIn(info.getMail(), info.getPassword());
-        String id = "{\"id\":\""+ uuid + "\" }";
-        return id;
+        InfoConnectionLogedIn infoCo = GetPerson.getInfoConnection(uuid, driver);
+        //String id = "{\"id\":\""+ uuid + "\" }";
+        return infoCo;
     }
 
 }

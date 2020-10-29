@@ -93,11 +93,11 @@ public class GetPerson {
 	}
 	
 	
-	public static ArrayList<Object> getFriends(String email, Driver driver) {
+	public static ArrayList<Person> getFriends(String uuid, Driver driver) {
 		Session session = driver.session();
-		String cypherQuery  = "match(p:Person {email : $email})-[:FRIENDS]-(p2:Person) return p2";
-		ArrayList<Object> list = new ArrayList<>();
-		Result result = session.run(cypherQuery, parameters("email", email));
+		String cypherQuery  = "match(p:Person {uuid : $uuid})-[:FRIENDS]-(p2:Person) return p2";
+		ArrayList<Person> list = new ArrayList<>();
+		Result result = session.run(cypherQuery, parameters("uuid", uuid));
 		while (result.hasNext()) {
 			Person person = new Person();
 			Map<String,Object> map =  result.next().fields().get(0).value().asMap();
@@ -108,10 +108,31 @@ public class GetPerson {
 			person.setAge(Integer.valueOf(map.get("age").toString()));
 			list.add(person);
 		}
-		System.out.println("returning friend of " + email + " " + list);
+		System.out.println("returning friend of " + uuid + " " + list);
 		return list;
 	}
-	
+
+
+	public static InfoConnectionLogedIn getInfoConnection(String uuid, Driver driver) {
+		Session session = driver.session();
+		String cypherQuery  = "match(p:Person {uuid : $uuid}) return p";
+		ArrayList<InfoConnectionLogedIn> list = new ArrayList<>();
+		Result result = session.run(cypherQuery, parameters("uuid", uuid));
+		while (result.hasNext()) {
+			InfoConnectionLogedIn info = new InfoConnectionLogedIn();
+			Map<String,Object> map =  result.next().fields().get(0).value().asMap();
+			//create Person
+			info.setEmail(map.get("email").toString());
+			info.setName(map.get("name").toString());
+			info.setFirstname(map.get("firstname").toString());
+			info.setAge(Integer.valueOf(map.get("age").toString()));
+			info.setUuid(map.get("uuid").toString());
+			list.add(info);
+
+		}
+		return list.get(0);
+	}
+
 	
 	
 	

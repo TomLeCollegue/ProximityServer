@@ -1,4 +1,5 @@
 import serveurNeo4j.AccountRest;
+import serveurNeo4j.FriendsRest;
 import serveurNeo4j.ImagesRest;
 import serveurNeo4j.accounts.Accounts;
 
@@ -14,6 +15,7 @@ public class MyApplication extends Application {
         h.add( PersonRest.class );
         h.add(AccountRest.class);
         h.add(ImagesRest.class);
+        h.add(FriendsRest.class);
         return h;
     }
 }

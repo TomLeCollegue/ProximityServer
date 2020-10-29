@@ -28,7 +28,7 @@ public class RelationFriends {
                 	params.put("date", java.time.LocalDate.now());
                     Result result = tx.run( "MATCH (a:Person),(b:Person)" + 
                     		"WHERE a.email = $email1 AND b.email = $email2 " + 
-                    		"CREATE (a)-[r:FRIENDS {date : $date}]-(b) RETURN b.name" ,
+                    		"CREATE (a)-[r:FRIENDS {date : $date}]->(b) RETURN b.name" ,
                             params);
                     return result.single().get( 0 ).asString();
                     
