@@ -5,15 +5,17 @@ public class Person {
     private String firstname;
     private int age;
     private String email;
+    private String password;
 
     public Person() {
     }
 
-    public Person(String name, String firstname, int age, String email) {
+    public Person(String name, String firstname, int age, String email, String password) {
         this.name = name;
         this.firstname = firstname;
         this.age = age;
         this.email = email;
+        this.password = password;
     }
 
     public String getName() {
@@ -48,6 +50,14 @@ public class Person {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -55,6 +65,7 @@ public class Person {
                 ", firstname='" + firstname + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

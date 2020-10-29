@@ -88,11 +88,8 @@ public class Accounts {
         return id;
     }
 
-    public static boolean CreateUser(String email, String password) throws ClassNotFoundException, SQLException {
+    public static boolean CreateUser(String email, String password, String randomUUIDString) throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
-
-        UUID uuid = UUID.randomUUID();
-        String randomUUIDString = uuid.toString();
 
         // create our mysql database connection
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);

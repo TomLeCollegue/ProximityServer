@@ -11,7 +11,7 @@ import org.neo4j.driver.TransactionWork;
 
 public class CreationNode {
 
-	public static boolean CreatePerson(String name, String firstname, String email, int age, Driver driver) {
+	public static boolean CreatePerson(String name, String firstname, String email, int age, String uuid, Driver driver) {
 			
 			try ( Session session = driver.session() )
 	        {
@@ -26,8 +26,9 @@ public class CreationNode {
 	                	params.put("firstname", firstname);
 	                	params.put("email", email);
 	                	params.put("age", age );
+	                	params.put("uuid", uuid);
 	                	
-	                    Result result = tx.run( "CREATE (p:Person {name : $name, firstname: $firstname, age: $age, email : $email } )RETURN p.name",
+	                    Result result = tx.run( "CREATE (p:Person {name : $name, firstname: $firstname, age: $age, email : $email, uuid : $uuid } )RETURN p.name",
 	                            params);
 	                    return result.single().get( 0 ).asString();
 	                    

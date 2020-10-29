@@ -1,5 +1,8 @@
 package serveurNeo4j;
 
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
 import serveurNeo4j.Person.InfoAccount;
 import serveurNeo4j.Person.Person;
 import serveurNeo4j.accounts.Accounts;
@@ -9,9 +12,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Path("/account")
 public class AccountRest {
+    Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
 
 
     @POST
@@ -20,7 +25,14 @@ public class AccountRest {
     @Produces("text/plain")
     public String SignUP(Person person) throws SQLException, ClassNotFoundException {
 
-        if(Accounts.CreateUser(person.getEmail(), "1234")){
+
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+
+        if(Accounts.CreateUser(person.getEmail(), person.getPassword() , randomUUIDString)){
+            CreationNode.CreatePerson(person.getName(), person.getFirstname(), person.getEmail(), person.getAge(), randomUUIDString, driver);
+
+
             return person.getEmail();
         }
         else{
