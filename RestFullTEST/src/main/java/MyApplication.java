@@ -1,4 +1,5 @@
 import serveurNeo4j.AccountRest;
+import serveurNeo4j.ImagesRest;
 import serveurNeo4j.accounts.Accounts;
 
 import javax.ws.rs.ApplicationPath;
@@ -12,6 +13,7 @@ public class MyApplication extends Application {
         HashSet h = new HashSet<Class<?>>();
         h.add( PersonRest.class );
         h.add(AccountRest.class);
+        h.add(ImagesRest.class);
         return h;
     }
 }
