@@ -1,8 +1,9 @@
-package serveurNeo4j;
+package rest;
 
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
+import serveurNeo4j.CreationNode;
 import serveurNeo4j.Person.GetPerson;
 import serveurNeo4j.Person.InfoAccount;
 import serveurNeo4j.Person.InfoConnectionLogedIn;
@@ -24,7 +25,7 @@ public class AccountRest {
     @POST
     @Path("/signUP")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     public String SignUP(Person person) throws SQLException, ClassNotFoundException {
 
 
@@ -35,10 +36,10 @@ public class AccountRest {
             CreationNode.CreatePerson(person.getName(), person.getFirstname(), person.getEmail(), person.getAge(), randomUUIDString, driver);
 
 
-            return person.getEmail();
+            return "{ \"response\": \"" + person.getEmail() + "\"}";
         }
         else{
-            return "mail error";
+            return "{ \"response\": \"mail error\"}";
         }
     }
 

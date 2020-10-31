@@ -102,6 +102,40 @@ public static boolean CreateRelationShipFormerFriends(String email1, String emai
 			return false;
 		}
 	}
+
+
+    public static boolean CreateRelationShipDiscovered(String email1, String email2,  Driver driver) {
+
+        try ( Session session = driver.session() )
+        {
+            String relation = session.writeTransaction( new TransactionWork<String>()
+            {
+                @Override
+                public String execute( Transaction tx )
+                {
+
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("email1",email1);
+                    params.put("email2",email2);
+                    params.put("date", java.time.LocalDate.now());
+                    Result result = tx.run( "MATCH (a:Person),(b:Person)" +
+                                    "WHERE a.email = $email1 AND b.email = $email2 " +
+                                    "MERGE (a)-[r:DISCOVERED {date : $date}]->(b) RETURN b.name" ,
+                            params);
+                    return result.single().get( 0 ).asString();
+
+                }
+            } );
+            System.out.println( relation );
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 	
 	
 }

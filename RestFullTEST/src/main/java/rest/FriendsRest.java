@@ -1,4 +1,4 @@
-package serveurNeo4j;
+package rest;
 
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;

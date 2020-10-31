@@ -1,6 +1,7 @@
-import serveurNeo4j.AccountRest;
-import serveurNeo4j.FriendsRest;
-import serveurNeo4j.ImagesRest;
+import rest.AccountRest;
+import rest.FriendsRest;
+import rest.ImagesRest;
+import rest.NearbyRest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
