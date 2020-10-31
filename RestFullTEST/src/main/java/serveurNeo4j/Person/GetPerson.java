@@ -133,6 +133,33 @@ public class GetPerson {
 		return list.get(0);
 	}
 
+
+	public static ArrayList<Person> GetPersonDiscovered (String uuid, Driver driver){
+
+		Session session = driver.session();
+		String cypherQuery  =   "match(p:Person {uuid : $uuid})-[:DISCOVERED]-(p2:Person)" +
+								"WHERE NOT (p)-[:FRIENDS]-(p2)" +
+							    "return DISTINCT p2";
+		ArrayList<Person> list = new ArrayList<>();
+		Result result = session.run(cypherQuery, parameters("uuid", uuid));
+		while (result.hasNext()) {
+			Person person = new Person();
+			Map<String,Object> map =  result.next().fields().get(0).value().asMap();
+			//create Person
+			person.setEmail(map.get("email").toString());
+			person.setName(map.get("name").toString());
+			person.setFirstname(map.get("firstname").toString());
+			person.setAge(Integer.valueOf(map.get("age").toString()));
+			list.add(person);
+		}
+		System.out.println("returning friend of " + uuid + " " + list);
+		return list;
+
+
+
+
+	}
+
 	
 	
 	

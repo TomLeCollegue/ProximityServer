@@ -26,4 +26,14 @@ public class FriendsRest {
         return new ListOfPerson(GetPerson.getFriends(uuid.getString("uuid"), driver));
 
     }
+
+    @POST
+    @Path("/getDiscoveredByUuid")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public ListOfPerson getDiscovered(JsonObject uuid){
+        return new ListOfPerson(GetPerson.GetPersonDiscovered(uuid.getString("uuid"), driver));
+
+    }
+
 }
