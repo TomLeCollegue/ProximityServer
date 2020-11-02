@@ -32,7 +32,7 @@ public class ImagesRest {
     }
 
     public static byte[] get(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
-        java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images\\" + _fileName);
+        java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\" + _fileName);
 
         byte[] _array = Files.readAllBytes(path);
         return _array;
@@ -49,13 +49,13 @@ public class ImagesRest {
 
     //compressImagesBeforeSending
     public static byte[] getLow(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
-        java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images\\" + _fileName);
+        java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\" + _fileName);
 
         File input = new File(String.valueOf(path));
         BufferedImage image;
         image = ImageIO.read(input);
 
-        File compressedImageFile = new File("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images\\compressed_" + _fileName);
+        File compressedImageFile = new File("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\compressed_" + _fileName);
         OutputStream os = new FileOutputStream(compressedImageFile);
 
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
@@ -74,7 +74,7 @@ public class ImagesRest {
         ios.close();
         writer.dispose();
 
-        java.nio.file.Path pathCompressed = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images\\compressed_" + _fileName);
+        java.nio.file.Path pathCompressed = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\compressed_" + _fileName);
         byte[] _array = Files.readAllBytes(pathCompressed);
 
         return _array;
@@ -86,7 +86,7 @@ public class ImagesRest {
     @Path("/{email}/upload")
     @Produces("text/plain")
     public String Upload(byte[] image, @PathParam("email") String email) throws Exception{
-        String filePath = "C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images\\" + email + "_pic.jpg";
+        String filePath = "C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\" + email + "_pic.jpg";
         File file = new File(filePath);
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(image);
@@ -94,6 +94,24 @@ public class ImagesRest {
 
         return "email";
     }
+
+
+    @GET
+    @Path("/{name}/downloadPicHobby")
+    @Produces("text/plain")
+    public byte[] downloadPicHobby(@PathParam("name") String name) throws IOException {
+        String fileName = name + "_pic.png";
+        return getPicHobby(fileName);
+
+    }
+
+    public static byte[] getPicHobby(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
+        java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_hobbies\\" + _fileName);
+
+        byte[] _array = Files.readAllBytes(path);
+        return _array;
+    }
+
 
 
 

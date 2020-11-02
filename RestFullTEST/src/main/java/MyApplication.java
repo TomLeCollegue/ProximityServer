@@ -1,7 +1,4 @@
-import rest.AccountRest;
-import rest.FriendsRest;
-import rest.ImagesRest;
-import rest.NearbyRest;
+import rest.*;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -16,6 +13,7 @@ public class MyApplication extends Application {
         h.add(AccountRest.class);
         h.add(ImagesRest.class);
         h.add(FriendsRest.class);
+        h.add(HobbiesRest.class);
         return h;
     }
 }
