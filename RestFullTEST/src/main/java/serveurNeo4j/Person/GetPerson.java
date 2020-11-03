@@ -138,7 +138,7 @@ public class GetPerson {
 
 		Session session = driver.session();
 		String cypherQuery  =   "match(p:Person {uuid : $uuid})-[:DISCOVERED]-(p2:Person)" +
-								"WHERE NOT (p)-[:FRIENDS]-(p2)" +
+								"WHERE NOT (p)-[:FRIENDS]-(p2) AND NOT (p)-[:REFUSED]-(p2)" +
 							    "return DISTINCT p2";
 		ArrayList<Person> list = new ArrayList<>();
 		Result result = session.run(cypherQuery, parameters("uuid", uuid));

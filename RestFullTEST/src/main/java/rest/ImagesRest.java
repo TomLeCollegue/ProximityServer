@@ -43,12 +43,21 @@ public class ImagesRest {
     @Produces("text/plain")
     public byte[] downloadLow(@PathParam("email") String email) throws IOException {
         String fileName = email + "_pic.jpg";
-        return get(fileName);
+        return getLow(fileName);
 
     }
 
     //compressImagesBeforeSending
-    public static byte[] getLow(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
+    public byte[] getLow(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
+
+        java.nio.file.Path pathCompressed = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\compressed_" + _fileName);
+        byte[] _array = Files.readAllBytes(pathCompressed);
+
+        return _array;
+    }
+
+    //compressImagesBeforeSending
+    public void CompressImage(String _fileName) throws RemoteException, IOException, OutOfMemoryError{
         java.nio.file.Path path = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\" + _fileName);
 
         File input = new File(String.valueOf(path));
@@ -73,11 +82,6 @@ public class ImagesRest {
         os.close();
         ios.close();
         writer.dispose();
-
-        java.nio.file.Path pathCompressed = Paths.get("C:\\Users\\Tom\\Desktop\\Proximity\\ProximityServer\\RestFullTEST\\images_users\\compressed_" + _fileName);
-        byte[] _array = Files.readAllBytes(pathCompressed);
-
-        return _array;
     }
 
 
@@ -91,6 +95,7 @@ public class ImagesRest {
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(image);
         fos.close();
+        CompressImage(email +"_pic.jpg");
 
         return "email";
     }

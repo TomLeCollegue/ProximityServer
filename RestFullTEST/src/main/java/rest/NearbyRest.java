@@ -27,6 +27,21 @@ public class NearbyRest {
         String email1 = jsonObject.getString("email1");
         String email2 = jsonObject.getString("email2");
         RelationFriends.CreateRelationShipDiscovered( email1,email2, driver);
-        return "{ \"response\": \"" + email1 + "\"}";
+        return "{ \"response\": \"" + email2 + "\"}";
+    }
+
+    @POST
+    @Path("/RefusePerson")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String RefusePerson(JsonObject jsonObject){
+
+        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
+
+        String email1 = jsonObject.getString("email1");
+        String email2 = jsonObject.getString("email2");
+
+        RelationFriends.CreateRelationShipRefused(email1,email2, driver);
+        return "{ \"response\": \"" + email2 + "\"}";
     }
 }
