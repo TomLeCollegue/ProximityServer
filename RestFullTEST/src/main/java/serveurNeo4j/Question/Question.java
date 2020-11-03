@@ -1,17 +1,15 @@
 package serveurNeo4j.Question;
 
-import serveurNeo4j.Hobby.Hobby;
-import serveurNeo4j.Person.Person;
-
 public class Question {
 
-    private Person person;
+    private String uuid;
     private String text;
     private String choice1;
     private String choice2;
     private String choice3;
     private String answer;
-    private Hobby hobby;
+    private String hobby;
+    private String uuidQuestion;
 
     public String getText() {
         return text;
@@ -53,42 +51,55 @@ public class Question {
         this.answer = answer;
     }
 
-    public Hobby getHobby() {
+    public String getHobby() {
         return hobby;
     }
 
-    public void setHobby(Hobby hobby) {
+    public void setHobby(String hobby) {
         this.hobby = hobby;
     }
 
-    public Person getPerson() {
-        return person;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public Question(Person person, String text, String choice1, String choice2, String choice3, String answer, Hobby hobby) {
+    public String getUuidQuestion() {
+        return uuidQuestion;
+    }
+
+    public void setUuidQuestion(String uuidQuestion) {
+        this.uuidQuestion = uuidQuestion;
+    }
+
+    public Question(String uuid, String text, String choice1, String choice2, String choice3, String answer, String hobby, String uuidQuestion) {
+        this.uuid = uuid;
         this.text = text;
         this.choice1 = choice1;
         this.choice2 = choice2;
         this.choice3 = choice3;
         this.answer = answer;
         this.hobby = hobby;
-        this.person = person;
+        this.uuidQuestion = uuidQuestion;
     }
 
+    public Question() {
+    }
 
     @Override
     public String toString() {
         return "Question{" +
-                "text='" + text + '\'' +
+                "uuid='" + uuid + '\'' +
+                ", text='" + text + '\'' +
                 ", choice1='" + choice1 + '\'' +
                 ", choice2='" + choice2 + '\'' +
                 ", choice3='" + choice3 + '\'' +
                 ", answer='" + answer + '\'' +
-                ", hobby=" + hobby +
+                ", hobby='" + hobby + '\'' +
+                ", uuidQuestion='" + uuidQuestion + '\'' +
                 '}';
     }
 }

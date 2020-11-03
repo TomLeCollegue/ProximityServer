@@ -14,6 +14,7 @@ public class MyApplication extends Application {
         h.add(ImagesRest.class);
         h.add(FriendsRest.class);
         h.add(HobbiesRest.class);
+        h.add(QuestionsRest.class);
         return h;
     }
 }
