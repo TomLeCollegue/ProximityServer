@@ -123,10 +123,41 @@ public class QuestionsRequest {
 			list.add(question);
 		}
 		return list;
+	}
 
+	public static String ModifQuestion(Question question,  Driver driver) {
 
+		try ( Session session = driver.session() )
+		{
+			String relation = session.writeTransaction( new TransactionWork<String>()
+			{
+				@Override
+				public String execute( Transaction tx )
+				{
 
+					Map<String, Object> params = new HashMap<>();
+					params.put("uuid", question.getUuidQuestion());
+					params.put("question", question.getText());
+					params.put("choice1", question.getChoice1());
+					params.put("choice2", question.getChoice2());
+					params.put("choice3", question.getChoice3());
+					params.put("answer", question.getAnswer());
 
+					Result result = tx.run( "MATCH (q:Question {uuid : $uuid}) " +
+									"SET q.text = $question, q.choice1 = $choice1, q.choice2 = $choice2, q.choice3 = $choice3, q.answer = $answer " +
+									"return q.text" ,
+							params);
+					return result.single().get( 0 ).asString();
+
+				}
+			} );
+			System.out.println( relation );
+			return relation;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 

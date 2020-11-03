@@ -54,4 +54,16 @@ public class QuestionsRest {
 
         return questions;
     }
+
+    @POST
+    @Path("/ModifyQuestion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("text/plain")
+    public String ModifyQuestion(Question question){
+
+        return QuestionsRequest.ModifQuestion(question,driver);
+    }
+
+
+
 }
