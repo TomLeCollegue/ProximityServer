@@ -29,11 +29,13 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
                 	Map<String, Object> params = new HashMap<>();
                 	params.put("uuid",uuid);
                 	params.put("hobby",hobby);
-                    Result result = tx.run( "MATCH (a:Person),(b:Hobby)" + 
-                    		"WHERE a.uuid = $uuid AND b.name = $hobby " +
-                    		"CREATE (a)-[r:EXPERIENCE {points : 0}]->(b) RETURN b.name" ,
+                    Result result = tx.run( "MATCH (a:Person {uuid : $uuid}),(b:Hobby{name : $hobby})" +
+									" WHERE NOT (a)-[:EXPERIENCE]->(b) " +
+									" CREATE (a)-[r:EXPERIENCE {points : 0}]->(b) " +
+									" RETURN b.name" ,
                             params);
                     return result.single().get( 0 ).asString();
+
                     
                 }
             } );
@@ -46,7 +48,7 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 		}
 	}
 	
-	public static boolean AddExperience(String email, String hobby, int incr,  Driver driver) {
+	public static boolean AddExperience(String uuid, String hobby, int incr,  Driver driver) {
 		
 		try ( Session session = driver.session() )
 	    {
@@ -57,10 +59,10 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 	            {
 	            	
 	            	Map<String, Object> params = new HashMap<>();
-	            	params.put("email",email);
+	            	params.put("uuid",uuid);
 	            	params.put("hobby",hobby);
 	            	params.put("incr", incr);
-	                Result result = tx.run( "MATCH (p:Person {email: $email})-[e:EXPERIENCE]-(h:Hobby {name : $hobby})" +
+	                Result result = tx.run( "MATCH (p:Person {uuid: $uuid})-[e:EXPERIENCE]-(h:Hobby {name : $hobby})" +
 	                		"SET e.points = (e.points+ $incr) return h.name" ,
 	                        params);
 	                return result.single().get( 0 ).asString();

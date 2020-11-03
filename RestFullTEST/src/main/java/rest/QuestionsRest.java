@@ -21,7 +21,7 @@ import java.util.UUID;
 @Path("/questions")
 public class QuestionsRest {
     Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
-
+    public static int IncrForCreationQuestion = 15;
 
     @POST
     @Path("/CreateQuestion")
@@ -40,6 +40,8 @@ public class QuestionsRest {
         String randomUUIDString = uuidQuestion.toString();
 
         QuestionsRequest.CreateQuestions(uuid,text,choice1,choice2,choice3,answer,hobby, randomUUIDString, driver);
+        RelationExperience.CreateRelationShipExperience(uuid,hobby,driver);
+        RelationExperience.AddExperience(uuid,hobby,IncrForCreationQuestion,driver);
         return "{ \"response\": \"" + jsonObject.getString("text") + "\"}";
     }
 
