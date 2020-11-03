@@ -94,11 +94,29 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 		}
 		System.out.println("returning friend of " + uuid + " " + list);
 		return list;
+	}
+
+	public static ArrayList<Hobby> GetAllHobbies (Driver driver){
+
+		Session session = driver.session();
+		String cypherQuery  = "match(h:Hobby)" +
+				"return h.name as name";
+		ArrayList<Hobby> list = new ArrayList<>();
+		Result result = session.run(cypherQuery);
+		while (result.hasNext()) {
+			Hobby hobby = new Hobby();
+			Map<String,Object> map = (result.next().asMap());
+			hobby.setName(map.get("name").toString());
+
+			list.add(hobby);
+		}
+		return list;
 
 
 
 
 	}
+
 
 
 

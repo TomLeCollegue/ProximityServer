@@ -57,6 +57,15 @@ public class HobbiesRest {
         return hobbies;
     }
 
+    @POST
+    @Path("/GetAllHobbies")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Hobbies GetHobbies(){
+
+        Hobbies hobbies = new Hobbies(RelationExperience.GetAllHobbies(driver));
+
+        return hobbies;
+    }
 
 
 
