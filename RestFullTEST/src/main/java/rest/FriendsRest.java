@@ -6,6 +6,7 @@ import org.neo4j.driver.GraphDatabase;
 import serveurNeo4j.Person.GetPerson;
 import serveurNeo4j.Person.ListOfPerson;
 import serveurNeo4j.Person.Person;
+import serveurNeo4j.Relation.RelationFriends;
 
 import javax.json.JsonObject;
 import javax.print.attribute.standard.Media;
@@ -33,6 +34,22 @@ public class FriendsRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public ListOfPerson getDiscovered(JsonObject uuid){
         return new ListOfPerson(GetPerson.GetPersonDiscovered(uuid.getString("uuid"), driver));
+
+    }
+
+
+    @POST
+    @Path("/AcceptPerson")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String Accept(JsonObject jsonObject){
+        String uuid = jsonObject.getString("uuid");
+        String emailPerson = jsonObject.getString("emailPerson");
+
+        RelationFriends.CreateRelationShipAccepted(uuid,emailPerson,driver);
+        RelationFriends.CreateRelationShipFriendsIfTwoAccepted(uuid,emailPerson,driver);
+
+        return "{ \"response\": \"ok\" }";
 
     }
 

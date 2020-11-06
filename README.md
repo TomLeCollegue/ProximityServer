@@ -37,7 +37,6 @@ response :
 {
     "response": "tomkubasik"
 }
-}
 ```
 
 ### SIGN IN ###
@@ -142,7 +141,7 @@ url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/nearby/RefusePerson
 
 ### MODIFY QUESTION ###
 
-url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/nearby/RefusePerson
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/questions/ModifyQuestion
 
 ```json
 {
@@ -348,6 +347,16 @@ url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/hobbies/CreateRelationHobb
     "hobby": "Tennis",
     "uuid": "76431938-81f9-4b9b-ae86-549095a93961"
 }
+```
+
+### ACCEPT PERSON ###
+
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/Friends/AcceptPerson
+
+```json
+{
+    "uuid":"76431938-81f9-4b9b-ae86-549095a93961",
+    "emailPerson":"leavaucanson"
 }
 ```
 

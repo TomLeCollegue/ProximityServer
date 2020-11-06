@@ -120,6 +120,39 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 	}
 
 
+	public static String CreateRelationShipExperienceWhenAnswerQuestion(String uuidPerson, String uuidQuestion,  Driver driver) {
+
+		try ( Session session = driver.session() )
+		{
+			String relation = session.writeTransaction( new TransactionWork<String>()
+			{
+				@Override
+				public String execute( Transaction tx )
+				{
+
+					Map<String, Object> params = new HashMap<>();
+					params.put("uuidPerson",uuidPerson);
+					params.put("uuidQuestion", uuidQuestion);
+					Result result = tx.run( "MATCH (a:Person {uuid : $uuidPerson}),(q:Question { uuid: $uuidQuestion })-[:HOBBY]-(b:Hobby)" +
+									" WHERE NOT (a)-[:EXPERIENCE]->(b) " +
+									" CREATE (a)-[r:EXPERIENCE {points : 0}]->(b) " +
+									" RETURN b.name" ,
+							params);
+					return result.single().get( 0 ).asString();
+
+
+				}
+			} );
+			System.out.println( relation );
+			return relation;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+
+
 
 
 }

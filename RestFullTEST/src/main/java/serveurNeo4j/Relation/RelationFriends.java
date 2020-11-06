@@ -167,4 +167,68 @@ public class RelationFriends {
     }
 
 
+    public static boolean CreateRelationShipAccepted(String uuid1, String email2,  Driver driver) {
+
+        try ( Session session = driver.session() )
+        {
+            String relation = session.writeTransaction( new TransactionWork<String>()
+            {
+                @Override
+                public String execute( Transaction tx )
+                {
+
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("uuid1",uuid1);
+                    params.put("email2",email2);
+                    params.put("date", java.time.LocalDate.now());
+                    Result result = tx.run( "MATCH (a:Person {uuid: $uuid1}),(b:Person {email: $email2})" +
+                                    "WHERE NOT (a)-[:ACCEPTED]->(b)" +
+                                    "CREATE (a)-[r:ACCEPTED {date : $date}]->(b) RETURN b.name" ,
+                            params);
+                    return result.single().get( 0 ).asString();
+
+                }
+            } );
+            System.out.println( relation );
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean CreateRelationShipFriendsIfTwoAccepted(String uuid1, String email2,  Driver driver) {
+
+        try ( Session session = driver.session() )
+        {
+            String relation = session.writeTransaction( new TransactionWork<String>()
+            {
+                @Override
+                public String execute( Transaction tx )
+                {
+
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("uuid1",uuid1);
+                    params.put("email2",email2);
+                    params.put("date", java.time.LocalDate.now());
+                    Result result = tx.run( "MATCH (a:Person {uuid: $uuid1}),(b:Person {email: $email2})" +
+                                    "WHERE (a)-[:ACCEPTED]->(b) AND (b)-[:ACCEPTED]->(a) " +
+                                    "CREATE (a)-[r:FRIENDS {date : $date}]->(b) RETURN b.name" ,
+                            params);
+                    return result.single().get( 0 ).asString();
+
+                }
+            } );
+            System.out.println( relation );
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 }

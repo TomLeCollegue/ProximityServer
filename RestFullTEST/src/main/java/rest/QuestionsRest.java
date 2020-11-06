@@ -5,6 +5,7 @@ import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 import serveurNeo4j.CreationNode;
 import serveurNeo4j.Hobby.Hobbies;
+import serveurNeo4j.Hobby.Hobby;
 import serveurNeo4j.Question.Question;
 import serveurNeo4j.Question.Questions;
 import serveurNeo4j.Question.QuestionsAnwers;
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class QuestionsRest {
     Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
     public static int IncrForCreationQuestion = 15;
+    public static int IncrForGoodAnswer = 50;
 
     @POST
     @Path("/CreateQuestion")
@@ -87,12 +89,16 @@ public class QuestionsRest {
     @Produces(MediaType.APPLICATION_JSON)
     public String answerQuestion(QuestionsAnwers answers){
         String Response = "ok";
-
+        String Hobby = " ";
         for (int i = 0; i < answers.getAnswers().size() ; i++) {
             QuestionsRequest.AnswerRelation(answers.getUuid(), answers.getAnswers().get(i).getUuid(), answers.getAnswers().get(i).isBool(),driver);
+            Hobby = RelationExperience.CreateRelationShipExperienceWhenAnswerQuestion(answers.getUuid(),answers.getAnswers().get(i).getUuid(), driver);
+            if(answers.getAnswers().get(i).isBool()){
+                RelationExperience.AddExperience(answers.getUuid(), Hobby, IncrForGoodAnswer, driver );
+            }
         }
 
-        return "{ \"response\": \"" + Response + "\"}";
+        return "{ \"response\": \"" + Hobby + "\"}";
     }
 
 
