@@ -250,6 +250,55 @@ response :
 }
 ```
 
+### GET QUESTIONS BY EMAIL ###
+
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/questions/GetQuestionByEmail
+
+```json
+{
+    "email":"tomkubasik"
+}
+```
+response : 
+
+```json
+{
+    "questions": [
+        {
+            "answer": "20",
+            "choice1": "1",
+            "choice2": "2",
+            "choice3": "3",
+            "hobby": "Tennis",
+            "text": "Nombre de grands chelem Nadal",
+            "uuid": "private",
+            "uuidQuestion": "a138c8ff-df7b-4eb9-838e-4637ec797abe"
+        },
+        {
+            "answer": "Pas encore bouffon",
+            "choice1": "2011",
+            "choice2": "2015",
+            "choice3": "2014",
+            "hobby": "Jeux-video",
+            "text": "En quelle année est sorti GTA VI",
+            "uuid": "private",
+            "uuidQuestion": "2db9538c-2674-482b-93af-b058a34f6103"
+        },
+        {
+            "answer": "Java le sang",
+            "choice1": "Golang",
+            "choice2": "Kotlin",
+            "choice3": "Scratch",
+            "hobby": "Informatique",
+            "text": "Quel est le meilleur language de programmation du monde entier ? fait attention a toi BOBO",
+            "uuid": "private",
+            "uuidQuestion": "07a46dcd-7219-4a72-ac83-773e3b8eb012"
+        }
+    ]
+}
+```
+
+
 ### CREATE HOBBY ###
 
 url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/hobbies/CreateHobby

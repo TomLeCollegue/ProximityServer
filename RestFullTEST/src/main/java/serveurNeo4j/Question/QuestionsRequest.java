@@ -84,6 +84,34 @@ public class QuestionsRequest {
 		return list;
 	}
 
+	public static ArrayList<Question> GetQuestionsByEmail (String email, Driver driver){
+
+		Session session = driver.session();
+		String cypherQuery  =   "match(p:Person {email : $email})-[qr:QUESTION]-(q:Question)-[hr:HOBBY]-(h:Hobby)" +
+				"return q";
+		ArrayList<Question> list = new ArrayList<>();
+		Result result = session.run(cypherQuery, parameters("email", email));
+		while (result.hasNext()) {
+			Question question = new Question();
+			Map<String,Object> map =  result.next().fields().get(0).value().asMap();
+
+			question.setText(map.get("text").toString());
+			question.setChoice1(map.get("choice1").toString());
+			question.setChoice2(map.get("choice2").toString());
+			question.setChoice3(map.get("choice3").toString());
+			question.setAnswer(map.get("answer").toString());
+			question.setUuid("private");
+			question.setHobby(map.get("hobby").toString());
+			question.setUuidQuestion(map.get("uuid").toString());
+
+
+
+			list.add(question);
+		}
+		return list;
+	}
+
+
 	public static String ModifQuestion(Question question,  Driver driver) {
 
 		try ( Session session = driver.session() )

@@ -59,6 +59,18 @@ public class QuestionsRest {
     }
 
     @POST
+    @Path("/GetQuestionByEmail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Questions GetQuestionsByEmail(JsonObject jsonObject){
+        String email = jsonObject.getString("email");
+
+        Questions questions = new Questions(QuestionsRequest.GetQuestionsByEmail(email,driver));
+
+        return questions;
+    }
+
+    @POST
     @Path("/ModifyQuestion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("text/plain")
