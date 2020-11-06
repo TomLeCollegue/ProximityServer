@@ -7,6 +7,7 @@ import serveurNeo4j.CreationNode;
 import serveurNeo4j.Hobby.Hobbies;
 import serveurNeo4j.Question.Question;
 import serveurNeo4j.Question.Questions;
+import serveurNeo4j.Question.QuestionsAnwers;
 import serveurNeo4j.Question.QuestionsRequest;
 import serveurNeo4j.Relation.RelationExperience;
 
@@ -65,6 +66,23 @@ public class QuestionsRest {
 
         return QuestionsRequest.ModifQuestion(question,driver);
     }
+
+
+
+    @POST
+    @Path("/answerQuestions")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String answerQuestion(QuestionsAnwers answers){
+        String Response = "ok";
+
+        for (int i = 0; i < answers.getAnswers().size() ; i++) {
+            QuestionsRequest.AnswerRelation(answers.getUuid(), answers.getAnswers().get(i).getUuid(), answers.getAnswers().get(i).isBool(),driver);
+        }
+
+        return "{ \"response\": \"" + Response + "\"}";
+    }
+
 
 
 

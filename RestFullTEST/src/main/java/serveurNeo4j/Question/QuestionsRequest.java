@@ -119,5 +119,37 @@ public class QuestionsRequest {
 		}
 	}
 
+	public static boolean AnswerRelation(String uuidPerson, String uuidQuestion, boolean answer, Driver driver) {
+
+
+		try ( Session session = driver.session() )
+		{
+			String relation = session.writeTransaction( new TransactionWork<String>()
+			{
+				@Override
+				public String execute( Transaction tx )
+				{
+
+					Map<String, Object> params = new HashMap<>();
+					params.put("uuidPerson",uuidPerson);
+					params.put("uuidQuestion", uuidQuestion);
+					params.put("answer", answer);
+
+					Result result = tx.run( "MATCH (p:Person {uuid : $uuidPerson }), (q:Question { uuid: $uuidQuestion })" +
+									" CREATE (p)-[a:ANSWERED { response : $answer }]->(q) " +
+									" RETURN p.name ", params);
+					return result.single().get( 0 ).asString();
+
+				}
+			} );
+			System.out.println( relation );
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 
 }
