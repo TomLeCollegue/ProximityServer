@@ -1,5 +1,6 @@
 # ProximityServer
-API de l'application Proximity
+Proximity App API : 
+Proximity is based on a Neo4J BDD and MariaDB BDD
 
 ## Proximity : ##
 
