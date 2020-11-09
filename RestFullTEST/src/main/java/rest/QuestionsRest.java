@@ -91,8 +91,8 @@ public class QuestionsRest {
         String Response = "ok";
         String Hobby = " ";
         for (int i = 0; i < answers.getAnswers().size() ; i++) {
-            QuestionsRequest.AnswerRelation(answers.getUuid(), answers.getAnswers().get(i).getUuid(), answers.getAnswers().get(i).isBool(),driver);
-            Hobby = RelationExperience.CreateRelationShipExperienceWhenAnswerQuestion(answers.getUuid(),answers.getAnswers().get(i).getUuid(), driver);
+            Hobby = QuestionsRequest.AnswerRelation(answers.getUuid(), answers.getAnswers().get(i).getUuid(), answers.getAnswers().get(i).isBool(),driver);
+            RelationExperience.CreateRelationShipExperienceWhenAnswerQuestion(answers.getUuid(),answers.getAnswers().get(i).getUuid(), driver);
             if(answers.getAnswers().get(i).isBool()){
                 RelationExperience.AddExperience(answers.getUuid(), Hobby, IncrForGoodAnswer, driver );
             }

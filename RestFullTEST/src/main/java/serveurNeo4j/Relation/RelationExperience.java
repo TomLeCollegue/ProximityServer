@@ -34,7 +34,7 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 									" CREATE (a)-[r:EXPERIENCE {points : 0}]->(b) " +
 									" RETURN b.name" ,
                             params);
-                    return result.single().get( 0 ).asString();
+                    return "done";
 
                     
                 }
@@ -65,7 +65,7 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 	                Result result = tx.run( "MATCH (p:Person {uuid: $uuid})-[e:EXPERIENCE]-(h:Hobby {name : $hobby})" +
 	                		"SET e.points = (e.points+ $incr) return h.name" ,
 	                        params);
-	                return result.single().get( 0 ).asString();
+	                return "done";
 	                
 	            }
 	        } );
@@ -138,7 +138,9 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 									" CREATE (a)-[r:EXPERIENCE {points : 0}]->(b) " +
 									" RETURN b.name" ,
 							params);
-					return result.single().get( 0 ).asString();
+					return "done";
+
+
 
 
 				}

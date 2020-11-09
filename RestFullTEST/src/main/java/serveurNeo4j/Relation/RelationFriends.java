@@ -185,7 +185,7 @@ public class RelationFriends {
                                     "WHERE NOT (a)-[:ACCEPTED]->(b)" +
                                     "CREATE (a)-[r:ACCEPTED {date : $date}]->(b) RETURN b.name" ,
                             params);
-                    return result.single().get( 0 ).asString();
+                    return "done";
 
                 }
             } );
@@ -216,7 +216,7 @@ public class RelationFriends {
                                     "WHERE (a)-[:ACCEPTED]->(b) AND (b)-[:ACCEPTED]->(a) " +
                                     "CREATE (a)-[r:FRIENDS {date : $date}]->(b) RETURN b.name" ,
                             params);
-                    return result.single().get( 0 ).asString();
+                    return "done";
 
                 }
             } );
