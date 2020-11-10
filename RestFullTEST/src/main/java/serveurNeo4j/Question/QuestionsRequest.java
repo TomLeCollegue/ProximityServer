@@ -179,5 +179,34 @@ public class QuestionsRequest {
 		}
 	}
 
+	public static String RemoveQuestion(String uuidQuestion, Driver driver) {
+
+
+		try ( Session session = driver.session() )
+		{
+			String relation = session.writeTransaction( new TransactionWork<String>()
+			{
+				@Override
+				public String execute( Transaction tx )
+				{
+
+					Map<String, Object> params = new HashMap<>();
+					params.put("uuidQuestion",uuidQuestion);
+
+					Result result = tx.run( "MATCH (q:Question {uuid : $uuidQuestion})-[r]-(n)" +
+							" DELETE q,r ", params);
+					return "done";
+				}
+			} );
+			System.out.println( relation );
+			return relation;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+
+
 
 }

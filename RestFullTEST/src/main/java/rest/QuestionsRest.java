@@ -102,6 +102,18 @@ public class QuestionsRest {
     }
 
 
+    @POST
+    @Path("/removeQuestion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String RemoveQuestion(JsonObject jsonObject){
+        String uuidQuestion = jsonObject.getString("uuidQuestion");
+        String response = QuestionsRequest.RemoveQuestion(uuidQuestion,driver);
+        return "{ \"response\": \"" + response + "\"}";
+    }
+
+
+
 
 
 }

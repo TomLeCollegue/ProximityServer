@@ -360,6 +360,16 @@ url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/Friends/AcceptPerson
 }
 ```
 
+### REMOVE QUESTION ###
+
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/questions/removeQuestion
+
+```json
+{
+    "uuidQuestion":"76431938-81f9-4b9b-ae86-549095a93961"
+}
+```
+
 
 
 
