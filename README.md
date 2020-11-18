@@ -371,6 +371,20 @@ url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/questions/removeQuestion
 ```
 
 
+### SHORTEST PATH ###
+
+match (p:Person {name : "Vaucauson"}),(p2:Person {name : "Kubasik"}),
+n = shortestPath((p)-[*..2]-(p2))
+return n
+
+
+
+### Get response Quizz friends ###
+
+Match (p:Person {name:"Kubasik"})-[r1:QUESTION]-(q:Question)-[r2:ANSWERED]-(p2:Person {name: "Callejon"})
+Return q.text AS question, r2.response AS response
+
+
 
 
 

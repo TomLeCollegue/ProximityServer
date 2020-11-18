@@ -6,12 +6,10 @@ import org.neo4j.driver.GraphDatabase;
 import serveurNeo4j.CreationNode;
 import serveurNeo4j.Hobby.Hobbies;
 import serveurNeo4j.Hobby.Hobby;
-import serveurNeo4j.Question.Question;
-import serveurNeo4j.Question.Questions;
-import serveurNeo4j.Question.QuestionsAnwers;
-import serveurNeo4j.Question.QuestionsRequest;
+import serveurNeo4j.Question.*;
 import serveurNeo4j.Relation.RelationExperience;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -111,6 +109,20 @@ public class QuestionsRest {
         String response = QuestionsRequest.RemoveQuestion(uuidQuestion,driver);
         return "{ \"response\": \"" + response + "\"}";
     }
+
+    @POST
+    @Path("/getResultQuizz")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResultQuizz getResultQuizz(JsonObject jsonObject){
+        String uuid = jsonObject.getString("uuid");
+        String email = jsonObject.getString("email");
+
+        ResultQuizz resultQuizz = new ResultQuizz(QuestionsRequest.getResultQuizz(uuid,email,driver));
+        return resultQuizz;
+
+    }
+
 
 
 

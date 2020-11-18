@@ -207,6 +207,28 @@ public class QuestionsRequest {
 		}
 	}
 
+	public static ArrayList<QuestionResult> getResultQuizz (String uuid, String email, Driver driver){
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("uuid",uuid);
+		params.put("email", email);
+
+		Session session = driver.session();
+		String cypherQuery  =   "Match (p:Person {uuid: $uuid})-[r1:QUESTION]-(q:Question)-[r2:ANSWERED]-(p2:Person {email: $email}) " +
+				"Return q.text AS question, r2.response AS response";
+		ArrayList<QuestionResult> list = new ArrayList<>();
+		Result result = session.run(cypherQuery, params);
+		while (result.hasNext()) {
+			QuestionResult questionResult = new QuestionResult();
+			Map<String,Object> map = (result.next().asMap());
+			questionResult.setQuestionText(map.get("question").toString());
+			questionResult.setResponse((boolean) map.get("response"));
+
+			list.add(questionResult);
+		}
+		return list;
+	}
+
 
 
 }
