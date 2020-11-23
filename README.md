@@ -385,6 +385,63 @@ Match (p:Person {name:"Kubasik"})-[r1:QUESTION]-(q:Question)-[r2:ANSWERED]-(p2:P
 Return q.text AS question, r2.response AS response
 
 
+### Get Friends in commun ###
+
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/similarity/GetFriendsInCommon
+
+```json
+{
+    "uuid" : "1b457b13-4b12-4e3a-bc57-8964e253293f",
+    "email":"lyacallejon"
+}
+```
+
+
+response : 
+
+```json
+{
+    "persons": [
+        {
+            "age": 21,
+            "email": "tomkubasik",
+            "firstname": "Tom",
+            "name": "Kubasik"
+        }
+    ]
+}
+```
+
+### Get Hobbies in commun ###
+
+url : http://localhost:8080/RestFullTEST-1.0-SNAPSHOT/questions/removeQuestion
+
+```json
+{
+    "uuid" : "1b457b13-4b12-4e3a-bc57-8964e253293f",
+    "email":"lyacallejon"
+}
+```
+
+response : 
+
+```json
+{
+    "hobbies": [
+        {
+            "name": "Jeux-video",
+            "xp": 115
+        },
+        {
+            "name": "Informatique",
+            "xp": 100
+        }
+    ]
+}
+```
+
+
+
 
 
 

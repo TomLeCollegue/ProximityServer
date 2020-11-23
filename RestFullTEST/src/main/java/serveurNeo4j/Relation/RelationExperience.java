@@ -98,6 +98,31 @@ public static boolean CreateRelationShipExperience(String uuid, String hobby,  D
 		return list;
 	}
 
+	public static ArrayList<Hobby> GetHobbyInCommun (String uuid, String email, Driver driver){
+
+		Session session = driver.session();
+		String cypherQuery  =   "match(p:Person {uuid : $uuid})-[e1:EXPERIENCE]-(h:Hobby)-[e2:EXPERIENCE]-(p2:Person {email : $email})" +
+			"return h.name as name, e2.points as points Order by points DESC LIMIT 5";
+		ArrayList<Hobby> list = new ArrayList<>();
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("uuid",uuid);
+		params.put("email",email);
+
+		Result result = session.run(cypherQuery, params);
+		while (result.hasNext()) {
+			Hobby hobby = new Hobby();
+			Map<String,Object> map = (result.next().asMap());
+			hobby.setName(map.get("name").toString());
+			hobby.setXp(Integer.valueOf(map.get("points").toString()));
+
+			list.add(hobby);
+		}
+		System.out.println("returning friend of " + uuid + " " + list);
+		return list;
+	}
+
+
 	public static ArrayList<Hobby> GetAllHobbies (Driver driver){
 
 		Session session = driver.session();

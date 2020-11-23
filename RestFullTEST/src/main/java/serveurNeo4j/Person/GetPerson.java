@@ -3,6 +3,7 @@ package serveurNeo4j.Person;
 import static org.neo4j.driver.Values.parameters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4j.driver.Driver;
@@ -109,6 +110,29 @@ public class GetPerson {
 			list.add(person);
 		}
 		System.out.println("returning friend of " + uuid + " " + list);
+		return list;
+	}
+
+	public static ArrayList<Person> getFriendsInCommun(String uuid, String email, Driver driver) {
+		Session session = driver.session();
+		String cypherQuery  = "match(p:Person {uuid : $uuid})-[:FRIENDS]-(p2:Person)-[:FRIENDS]-(p3:Person {email : $email}) return p2";
+		ArrayList<Person> list = new ArrayList<>();
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("uuid",uuid);
+		params.put("email",email);
+
+		Result result = session.run(cypherQuery, params);
+		while (result.hasNext()) {
+			Person person = new Person();
+			Map<String,Object> map =  result.next().fields().get(0).value().asMap();
+			//create Person
+			person.setEmail(map.get("email").toString());
+			person.setName(map.get("name").toString());
+			person.setFirstname(map.get("firstname").toString());
+			person.setAge(Integer.valueOf(map.get("age").toString()));
+			list.add(person);
+		}
 		return list;
 	}
 
