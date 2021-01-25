@@ -22,7 +22,7 @@ public class NearbyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public String getByEmail(JsonObject jsonObject){
 
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
+        Driver driver = GraphDatabase.driver("bolt://89.87.13.28:62015", AuthTokens.basic("neo4j", "1234"));
 
         String email1 = jsonObject.getString("email1");
         String email2 = jsonObject.getString("email2");

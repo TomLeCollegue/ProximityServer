@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Path("/questions")
 public class QuestionsRest {
-    Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
+    Driver driver = GraphDatabase.driver("bolt://89.87.13.28:62015", AuthTokens.basic("neo4j", "1234"));
     public static int IncrForCreationQuestion = 15;
     public static int IncrForGoodAnswer = 50;
 

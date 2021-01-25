@@ -6,7 +6,7 @@ public class Accounts {
 
 
     /* Connexion à la base de données */
-    public static String URL = "jdbc:mariadb://127.0.0.1:3306/proximity";
+    public static String URL = "jdbc:mariadb://89.87.13.28:3306/proximity";
     public static String USER = "root";
     public static String PASSWORD = "1234";
 

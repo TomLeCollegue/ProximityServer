@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @Path("/Friends")
 public class FriendsRest {
-    Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
+    Driver driver = GraphDatabase.driver("bolt://89.87.13.28:62015", AuthTokens.basic("neo4j", "1234"));
 
     @POST
     @Path("/getFriendsByUuid")

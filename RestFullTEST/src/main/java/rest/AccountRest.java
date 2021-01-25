@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Path("/account")
 public class AccountRest {
-    Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "1234"));
+    Driver driver = GraphDatabase.driver("bolt://89.87.13.28:62015", AuthTokens.basic("neo4j", "1234"));
 
 
     @POST

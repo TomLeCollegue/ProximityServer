@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ProximityServer:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProximityServer_war2</output-path>
+    <root id="archive" name="ProximityServer_war.war">
+      <element id="artifact" artifact-name="ProximityServer:war exploded" />
+    </root>
+  </artifact>
+</component>
